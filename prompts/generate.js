@@ -22,7 +22,7 @@ export const get_generate_prompt = (topics, get_old_question) => {
       {
         "question": "Aquí va la pregunta.",
         "options": ["A", "B", "C", "D"],
-        "correctAnswer": "Texto exacto de la opción correcta",
+        "correctAnswerIndex": "Aqui el indice de la opción correcta (0, 1, 2 o 3)",
        },
       ...
     ]
