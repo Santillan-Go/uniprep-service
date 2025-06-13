@@ -78,59 +78,64 @@ export const get_generate_prompt_lecture = (
   const prompt = `\nID de generación: ${timestamp}`;
 
   if (get_old_question.length > 0) {
-    return `
-    Eres un profesor experto en comprensión lectora que ayuda a estudiantes a prepararse para el examen de ingreso a la universidad.
+    return `Eres un profesor experto en comprensión lectora que ayuda a estudiantes a prepararse para el examen de ingreso a la universidad.
 
-    
-    Crea ${numberOfQuestions} preguntas de matemáticas basadas en los siguientes subtemas:
-    
-    ${topics}
-    
-    Reglas:
-    - Cada pregunta debe estar basada en un fragmento breve de texto (narrativo, expositivo, etc.), máximo 80 palabras.
-- Asegúrate de variar las habilidades evaluadas (inferencia, ideas principales, vocabulario en contexto, etc.).
-- Dificultad balanceada: fácil, media y difícil.
-- Formato de respuesta: JSON con esta estructura:
-    
-    [
-      {
-        "question": "Aquí va la pregunta.",
-        "options": ["A", "B", "C", "D"],
-        "correctAnswerIndex": "Aqui el indice de la opción correcta (0, 1, 2 o 3)",
-       },
-      ...
-    ]
-    
-    Responde **solo con el array JSON**, sin comentarios ni texto adicional.
-    ID de generación: ${seed}
+Crea ${numberOfQuestions} preguntas de **comprensión lectora** basadas en los siguientes subtemas:
+
+${topics}
+
+Reglas:
+- Cada pregunta debe estar basada en un fragmento breve de texto (narrativo, expositivo, descriptivo o argumentativo), de máximo 80 palabras.
+- Incluye el texto como un campo llamado "text" en el JSON.
+- Las preguntas deben evaluar habilidades de lectura como: inferencias, idea principal, vocabulario en contexto, propósito del autor, secuencia de eventos, opinión vs hecho, etc.
+- NO incluyas cálculos matemáticos, fórmulas ni problemas numéricos.
+- Las preguntas deben tener una dificultad balanceada: fácil, media y difícil.
+- Formato de respuesta: un array JSON con esta estructura:
+
+[
+  {
+    "text": "Texto breve aquí...",
+    "question": "¿Pregunta basada en el texto anterior?",
+    "options": ["A", "B", "C", "D"],
+    "correctAnswerIndex": 2
+  },
+  ...
+]
+
+Responde solo con el array JSON, sin explicaciones ni comentarios.
+
+ID de generación: ${seed}
     ${prompt}
     `;
   } else {
     return `
-   Eres un profesor experto en comprensión lectora que ayuda a estudiantes a prepararse para el examen de ingreso a la universidad.
+  Eres un profesor experto en comprensión lectora que ayuda a estudiantes a prepararse para el examen de ingreso a la universidad.
 
-    
-    Crea ${numberOfQuestions} preguntas de matemáticas basadas en los siguientes subtemas:
-    
-    ${topics}
-    
-    Reglas:
-    - Cada pregunta debe estar basada en un fragmento breve de texto (narrativo, expositivo, etc.), máximo 80 palabras.
-- Asegúrate de variar las habilidades evaluadas (inferencia, ideas principales, vocabulario en contexto, etc.).
-- Dificultad balanceada: fácil, media y difícil.
-- Formato de respuesta: JSON con esta estructura:
-    
-    [
-      {
-        "question": "Aquí va la pregunta.",
-        "options": ["A", "B", "C", "D"],
-        "correctAnswerIndex": "Aqui el indice de la opción correcta (0, 1, 2 o 3)",
-       },
-      ...
-    ]
-    
-    Responde **solo con el array JSON**, sin comentarios ni texto adicional.
-    ID de generación: ${seed}
+Crea ${numberOfQuestions} preguntas de **comprensión lectora** basadas en los siguientes subtemas:
+
+${topics}
+
+Reglas:
+- Cada pregunta debe estar basada en un fragmento breve de texto (narrativo, expositivo, descriptivo o argumentativo), de máximo 80 palabras.
+- Incluye el texto como un campo llamado "text" en el JSON.
+- Las preguntas deben evaluar habilidades de lectura como: inferencias, idea principal, vocabulario en contexto, propósito del autor, secuencia de eventos, opinión vs hecho, etc.
+- NO incluyas cálculos matemáticos, fórmulas ni problemas numéricos.
+- Las preguntas deben tener una dificultad balanceada: fácil, media y difícil.
+- Formato de respuesta: un array JSON con esta estructura:
+
+[
+  {
+    "text": "Texto breve aquí...",
+    "question": "¿Pregunta basada en el texto anterior?",
+    "options": ["A", "B", "C", "D"],
+    "correctAnswerIndex": 2
+  },
+  ...
+]
+
+Responde solo con el array JSON, sin explicaciones ni comentarios.
+
+ID de generación: ${seed}
     ${prompt}
     `;
   }
