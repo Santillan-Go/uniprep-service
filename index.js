@@ -3,7 +3,10 @@ import express from "express";
 import cors from "cors";
 
 import dotenv from "dotenv";
-import { get_generate_prompt } from "./prompts/generate.js";
+import {
+  get_generate_prompt,
+  get_generate_prompt_lecture,
+} from "./prompts/generate.js";
 
 // Create an Express app instance
 const app = express();
