@@ -46,7 +46,7 @@ const exampleTopics = {
 let recentTests = [];
 
 app.post("/generate", async (req, res) => {
-  const { prompt, topics, numberOfQuestions } = req.body;
+  const { prompt, topics, numberOfQuestions, subject } = req.body;
 
   // if (!prompt) {
   //   return res.status(400).json({ error: "Prompt is required" });
@@ -58,17 +58,25 @@ app.post("/generate", async (req, res) => {
 
   const get_old_question = recentTests.map((test) => test.question).join("\n");
   try {
+    const promptText =
+      subject == "Matemáticas"
+        ? get_generate_prompt(
+            get_topics_text,
+            get_old_question,
+            numberOfQuestions
+          )
+        : get_generate_prompt_lecture(
+            get_topics_text,
+            get_old_question,
+            numberOfQuestions
+          );
     console.log("Generating response for prompt:", get_topics_text);
     const response = await client.chat.completions.create({
       model: "gpt-4o", // No pongas `deployment` si no es necesario, y ya lo defines aquí.
       messages: [
         {
           role: "user",
-          content: get_generate_prompt(
-            get_topics_text,
-            get_old_question,
-            numberOfQuestions
-          ),
+          content: promptText,
         },
       ],
       temperature: 0.3, // Más bajo = menos "imaginativo", más preciso
