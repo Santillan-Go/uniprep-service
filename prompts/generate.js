@@ -79,18 +79,18 @@ export const get_generate_prompt_lecture = (
 
   if (get_old_question.length > 0) {
     return `
-    Eres un profesor experto en matemáticas que ayuda a estudiantes a prepararse para el examen de ingreso a la universidad.
+    Eres un profesor experto en comprensión lectora que ayuda a estudiantes a prepararse para el examen de ingreso a la universidad.
+
     
     Crea ${numberOfQuestions} preguntas de matemáticas basadas en los siguientes subtemas:
     
     ${topics}
     
     Reglas:
-    - Las preguntas deben estar en español.
-    - Cada pregunta debe ser autocontenida y tener una dificultad variada (fácil, media, difícil).
-    - - Si la pregunta es de geometría, especifica claramente la información necesaria (como base y altura) o indica el tipo de triángulo.
-    - Si hay cálculos, verifica que el resultado sea correcto.
-    - Usa este formato JSON:
+    - Cada pregunta debe estar basada en un fragmento breve de texto (narrativo, expositivo, etc.), máximo 80 palabras.
+- Asegúrate de variar las habilidades evaluadas (inferencia, ideas principales, vocabulario en contexto, etc.).
+- Dificultad balanceada: fácil, media y difícil.
+- Formato de respuesta: JSON con esta estructura:
     
     [
       {
@@ -102,8 +102,6 @@ export const get_generate_prompt_lecture = (
     ]
     
     Responde **solo con el array JSON**, sin comentarios ni texto adicional.
-    por favor genera preguntas diferentes  a esto :
-    ${get_old_question}
     ID de generación: ${seed}
     ${prompt}
     `;
