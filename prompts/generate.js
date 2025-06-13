@@ -1,4 +1,8 @@
-export const get_generate_prompt = (topics, get_old_question) => {
+export const get_generate_prompt = (
+  topics,
+  get_old_question,
+  numberOfQuestions
+) => {
   const seed = Math.floor(Math.random() * 10000);
   const timestamp = new Date().toISOString();
   const prompt = `\nID de generación: ${timestamp}`;
@@ -7,7 +11,7 @@ export const get_generate_prompt = (topics, get_old_question) => {
     return `
     Eres un profesor experto en matemáticas que ayuda a estudiantes a prepararse para el examen de ingreso a la universidad.
     
-    Crea 5 preguntas de matemáticas basadas en los siguientes subtemas:
+    Crea ${numberOfQuestions} preguntas de matemáticas basadas en los siguientes subtemas:
     
     ${topics}
     
@@ -37,7 +41,7 @@ export const get_generate_prompt = (topics, get_old_question) => {
     return `
     Eres un profesor experto en matemáticas que ayuda a estudiantes a prepararse para el examen de ingreso a la universidad.
     
-    Crea 5 preguntas de matemáticas basadas en los siguientes subtemas:
+    Crea ${numberOfQuestions} preguntas de matemáticas basadas en los siguientes subtemas:
     
     ${topics}
     

@@ -46,13 +46,13 @@ const exampleTopics = {
 let recentTests = [];
 
 app.post("/generate", async (req, res) => {
-  const { prompt, topics } = req.body;
+  const { prompt, topics, numberOfQuestions } = req.body;
 
   // if (!prompt) {
   //   return res.status(400).json({ error: "Prompt is required" });
   // }
 
-  const get_topics_text = Object.entries(exampleTopics)
+  const get_topics_text = Object.entries(topics)
     .map(([topic, list]) => `${topic}: ${list.join(", ")}`)
     .join("\n");
 
@@ -64,7 +64,11 @@ app.post("/generate", async (req, res) => {
       messages: [
         {
           role: "user",
-          content: get_generate_prompt(get_topics_text, get_old_question),
+          content: get_generate_prompt(
+            get_topics_text,
+            get_old_question,
+            numberOfQuestions
+          ),
         },
       ],
       temperature: 0.3, // Más bajo = menos "imaginativo", más preciso
