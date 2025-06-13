@@ -106,6 +106,7 @@ app.post("/generate", async (req, res) => {
     //answer.replace(/```json/g, "").replace(/```/g, "");
     const result = JSON.parse(cleanAnswer);
     recentTests = result;
+    console.log("Generated response:", result);
     res.json(result);
   } catch (error) {
     console.error("Error generating response:", error);
