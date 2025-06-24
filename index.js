@@ -49,7 +49,7 @@ const exampleTopics = {
 let recentTests = [];
 
 app.post("/generate", async (req, res) => {
-  const { prompt, topics, numberOfQuestions, subject } = req.body;
+  const { prompt, topics, numberOfQuestions, subject, oldExam } = req.body;
 
   // if (!prompt) {
   //   return res.status(400).json({ error: "Prompt is required" });
@@ -59,7 +59,7 @@ app.post("/generate", async (req, res) => {
     .map(([topic, list]) => `${topic}: ${list.join(", ")}`)
     .join("\n");
 
-  const get_old_question = recentTests.map((test) => test.question).join("\n");
+  const get_old_question = oldExam.map((test) => test.question).join("\n");
   try {
     const promptText =
       subject == "Matemáticas"
