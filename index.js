@@ -5,6 +5,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import {
   get_generate_prompt,
+  get_generate_prompt_explanation,
   get_generate_prompt_lecture,
 } from "./prompts/generate.js";
 
@@ -107,6 +108,37 @@ app.post("/generate", async (req, res) => {
     const result = JSON.parse(cleanAnswer);
     recentTests = result;
     console.log("Generated response:", result);
+
+    //WE'RE GONNA TAKE question & options properties from the result
+    const formattedResult = result.map((item) => ({
+      question: item.question,
+      options: item.options,
+      correctAnswerIndex: item.correctAnswerIndex,
+    }));
+
+    const response2 = await client.chat.completions.create({
+      model: "gpt-4o", // No pongas `deployment` si no es necesario, y ya lo defines aquí.
+      messages: [
+        {
+          role: "user",
+          content: get_generate_prompt_explanation(formattedResult),
+        },
+      ],
+      temperature: 0.3, // Más bajo = menos "imaginativo", más preciso
+      max_tokens: 4000, // Aumenta por si las explicaciones son largas
+    });
+
+    const answer2 = response2.choices[0].message.content;
+    const cleanAnswer2 = answer2
+      .replace(/^```json\s*/, "")
+      .replace(/```$/, "")
+      .trim();
+    const result2 = JSON.parse(cleanAnswer2);
+    console.log("Generated explanations:", result2);
+    for (let i = 0; i < questions.length; i++) {
+      result[i].explanation = result2[i].explanation;
+    }
+    console.log("Generated explanations:", result);
     res.json(result);
   } catch (error) {
     console.error("Error generating response:", error);

@@ -141,6 +141,32 @@ ID de generación: ${seed}
   }
 };
 
+export const get_generate_prompt_explanation = (questions) => {
+  return `Eres un profesor experto en matemáticas que ayuda a estudiantes a comprender conceptos complejos.
+Tienes una lista de preguntas con sus opciones y la respuesta correcta indicada con su índice.
+Tu tarea es generar explicaciones claras y concisas que justifiquen por qué la respuesta correcta es la elegida.
+
+Aquí está la lista de preguntas:
+${questions
+  .map(
+    (q, i) =>
+      `${i + 1}. Pregunta: ${q.question}
+Opciones: ${q.options.map((opt, idx) => `${idx}. ${opt}`).join(" | ")}
+Respuesta correcta (index): ${q.correctAnswerIndex}`
+  )
+  .join("\n\n")}
+
+Responde SOLO con un array JSON que contenga objetos con el siguiente formato:
+[
+  {
+    "explanation": "Explicación detallada aquí"
+  },
+  ...
+]
+El orden debe coincidir con las preguntas. NO repitas las preguntas ni las opciones.
+`;
+};
+
 /*
 
  return `final prompt = 
