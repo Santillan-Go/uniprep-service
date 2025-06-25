@@ -135,7 +135,7 @@ app.post("/generate", async (req, res) => {
       .trim();
     const result2 = JSON.parse(cleanAnswer2);
     console.log("Generated explanations:", result2);
-    for (let i = 0; i < questions.length; i++) {
+    for (let i = 0; i < result.length; i++) {
       result[i].explanation = result2[i].explanation;
     }
     console.log("Generated explanations:", result);
