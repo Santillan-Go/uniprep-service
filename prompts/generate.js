@@ -245,7 +245,9 @@ ${questions
       `${i + 1}. Texto: ${q.text}
 Pregunta: ${q.question}
 Opciones: ${q.options.map((opt, idx) => `${idx}. ${opt}`).join(" | ")}
-Respuesta correcta (índice): ${q.correctAnswerIndex}`
+Respuesta correcta (índice): ${
+        q.correctAnswerIndex
+      } como es el index, di en la Explicación que es index + 1(que es la posicion real en el array de opciones) para que el estudiante lo entienda mejor.`
   )
   .join("\n\n")}
 
