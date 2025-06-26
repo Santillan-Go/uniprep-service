@@ -61,6 +61,8 @@ app.post("/generate", async (req, res) => {
     .join("\n");
 
   const get_old_question = oldExam.map((test) => test.question).join("\n");
+
+  console.log("Received old questions:", get_old_question);
   try {
     const promptText =
       subject == "Matemáticas"

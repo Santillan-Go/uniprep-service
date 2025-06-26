@@ -9,62 +9,123 @@ export const get_generate_prompt = (
 
   if (get_old_question.length > 0) {
     return `
-    Eres un profesor experto en matemáticas que ayuda a estudiantes a prepararse para el examen de ingreso a la universidad.
-    
-    Crea ${numberOfQuestions} preguntas de matemáticas basadas en los siguientes subtemas:
-    
-    ${topics}
-    
-    Reglas:
-    - Las preguntas deben estar en español.
-    - Cada pregunta debe ser autocontenida y tener una dificultad variada (fácil, media, difícil).
-    - - Si la pregunta es de geometría, especifica claramente la información necesaria (como base y altura) o indica el tipo de triángulo.
-    - Si hay cálculos, verifica que el resultado sea correcto.
-    - Usa este formato JSON:
-    
-    [
-      {
-        "question": "Aquí va la pregunta.",
-        "options": ["A", "B", "C", "D"],
-        "correctAnswerIndex": "Aqui el indice de la opción correcta (0, 1, 2 o 3)",
-       },
-      ...
-    ]
-    
-    Responde **solo con el array JSON**, sin comentarios ni texto adicional.
-    por favor genera preguntas diferentes  a esto :
-    ${get_old_question}
-    ID de generación: ${seed}
-    ${prompt}
+   Eres un profesor experto en matemáticas que ayuda a estudiantes a prepararse para el examen de ingreso a la universidad.
+
+Genera ${numberOfQuestions} preguntas originales de matemáticas basadas en los siguientes subtemas:
+
+${topics}
+
+Reglas:
+- Las preguntas deben estar en español y tener una redacción clara.
+- Varía la dificultad entre fácil, media y difícil.
+- Cada pregunta debe ser autocontenida, sin depender de contexto externo.
+- Verifica todos los cálculos y asegúrate de que la respuesta correcta sea precisa.
+- Si la pregunta es de geometría, especifica claramente todos los datos necesarios (por ejemplo: base, altura, tipo de triángulo, unidades).
+- No repitas ninguna pregunta que esté en esta lista previa:
+${get_old_question}
+- Asegúrate de que cada pregunta sea diferente en contexto, valores numéricos o enfoque.
+
+Formato de salida: responde solo con un arreglo JSON así:
+
+[
+  {
+    "question": "Texto de la pregunta",
+    "options": ["A", "B", "C", "D"],
+    "correctAnswerIndex": 2
+  }
+]
+
+No agregues ningún texto fuera del JSON.  
+ID de generación: ${seed}
+${prompt}
+
     `;
+    // return `
+    // Eres un profesor experto en matemáticas que ayuda a estudiantes a prepararse para el examen de ingreso a la universidad.
+
+    // Crea ${numberOfQuestions} preguntas de matemáticas basadas en los siguientes subtemas:
+
+    // ${topics}
+
+    // Reglas:
+    // - Las preguntas deben estar en español.
+    // - Cada pregunta debe ser autocontenida y tener una dificultad variada (fácil, media, difícil).
+    // - - Si la pregunta es de geometría, especifica claramente la información necesaria (como base y altura) o indica el tipo de triángulo.
+    // - Si hay cálculos, verifica que el resultado sea correcto.
+    // - Usa este formato JSON:
+
+    // [
+    //   {
+    //     "question": "Aquí va la pregunta.",
+    //     "options": ["A", "B", "C", "D"],
+    //     "correctAnswerIndex": "Aqui el indice de la opción correcta (0, 1, 2 o 3)",
+    //    },
+    //   ...
+    // ]
+
+    // Responde **solo con el array JSON**, sin comentarios ni texto adicional.
+    // por favor genera preguntas diferentes  a esto :
+    // ${get_old_question}, por favor no repitas las mismas preguntas, crealas con base en los subtemas que te doy.
+    // ID de generación: ${seed}
+    // ${prompt}
+    // `;
   } else {
     return `
     Eres un profesor experto en matemáticas que ayuda a estudiantes a prepararse para el examen de ingreso a la universidad.
-    
-    Crea ${numberOfQuestions} preguntas de matemáticas basadas en los siguientes subtemas:
-    
-    ${topics}
-    
-    Reglas:
-    - Las preguntas deben estar en español.
-    - Cada pregunta debe ser autocontenida y tener una dificultad variada (fácil, media, difícil).
-    - - Si la pregunta es de geometría, especifica claramente la información necesaria (como base y altura) o indica el tipo de triángulo.
-    - Si hay cálculos, verifica que el resultado sea correcto.
-    - Usa este formato JSON:
-    
-    [
-      {
-        "question": "Aquí va la pregunta.",
-        "options": ["A", "B", "C", "D"],
-        "correctAnswerIndex": "Aqui el indice de la opción correcta (0, 1, 2 o 3)",
-       },
-      ...
-    ]
-    
-    Responde **solo con el array JSON**, sin comentarios ni texto adicional.
-    ID de generación: ${seed}
-    ${prompt}
+
+Genera ${numberOfQuestions} preguntas originales de matemáticas basadas en los siguientes subtemas:
+
+${topics}
+
+Reglas:
+- Las preguntas deben estar en español y tener una redacción clara.
+- Varía la dificultad entre fácil, media y difícil.
+- Cada pregunta debe ser autocontenida, sin depender de contexto externo.
+- Verifica todos los cálculos y asegúrate de que la respuesta correcta sea precisa.
+- Si la pregunta es de geometría, especifica claramente todos los datos necesarios (por ejemplo: base, altura, tipo de triángulo, unidades).
+- Asegúrate de que cada pregunta sea diferente en contexto, valores numéricos o enfoque.
+
+Formato de salida: responde solo con un arreglo JSON así:
+
+[
+  {
+    "question": "Texto de la pregunta",
+    "options": ["A", "B", "C", "D"],
+    "correctAnswerIndex": 2
+  }
+]
+
+No agregues ningún texto fuera del JSON.  
+ID de generación: ${seed}
+${prompt}
     `;
+    // return `
+    // Eres un profesor experto en matemáticas que ayuda a estudiantes a prepararse para el examen de ingreso a la universidad.
+
+    // Crea ${numberOfQuestions} preguntas de matemáticas basadas en los siguientes subtemas:
+
+    // ${topics}
+
+    // Reglas:
+    // - Las preguntas deben estar en español.
+    // - Cada pregunta debe ser autocontenida y tener una dificultad variada (fácil, media, difícil).
+    // - - Si la pregunta es de geometría, especifica claramente la información necesaria (como base y altura) o indica el tipo de triángulo.
+    // - Si hay cálculos, verifica que el resultado sea correcto.
+    // - Usa este formato JSON:
+
+    // [
+    //   {
+    //     "question": "Aquí va la pregunta.",
+    //     "options": ["A", "B", "C", "D"],
+    //     "correctAnswerIndex": "Aqui el indice de la opción correcta (0, 1, 2 o 3)",
+    //    },
+    //   ...
+    // ]
+
+    // Responde **solo con el array JSON**, sin comentarios ni texto adicional.
+    // ID de generación: ${seed}
+    // ${prompt}
+    // `;
   }
 };
 
