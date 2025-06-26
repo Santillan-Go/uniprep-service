@@ -228,6 +228,62 @@ El orden debe coincidir con las preguntas. NO repitas las preguntas ni las opcio
 `;
 };
 
+export const get_generate_prompt_explanation_lecture = (questions) => {
+  return `Eres un profesor experto en comprensión lectora que ayuda a estudiantes a prepararse para el examen de ingreso a la universidad.
+
+Tienes una lista de preguntas, cada una basada en un fragmento de texto, junto con sus opciones de respuesta y el índice de la opción correcta.
+
+Tu tarea es generar explicaciones claras, concisas y enfocadas en el razonamiento textual que justifique por qué esa opción es la correcta. Ayuda al estudiante a entender el mensaje del texto y cómo se llega a la respuesta correcta.
+
+Evita repetir la pregunta u opciones. Solo enfócate en explicar por qué la opción correcta es la adecuada, haciendo referencia a pistas del texto o el tipo de razonamiento (inferencia, idea principal, propósito del autor, etc.).
+
+Aquí está la lista de preguntas:
+
+${questions
+  .map(
+    (q, i) =>
+      `${i + 1}. Texto: ${q.text}
+Pregunta: ${q.question}
+Opciones: ${q.options.map((opt, idx) => `${idx}. ${opt}`).join(" | ")}
+Respuesta correcta (índice): ${q.correctAnswerIndex}`
+  )
+  .join("\n\n")}
+
+Responde **solo** con un array JSON con el siguiente formato:
+
+[
+  {
+    "explanation": "Explicación aquí..."
+  },
+  ...
+]
+
+⚠️ El orden debe coincidir con las preguntas. No repitas las preguntas ni opciones.
+`;
+  // return `Eres un profesor experto en matemáticas que ayuda a estudiantes a comprender conceptos complejos.
+  // Tienes una lista de preguntas con sus opciones y la respuesta correcta indicada con su índice.
+  // Tu tarea es generar explicaciones claras y concisas que justifiquen por qué la respuesta correcta es la elegida.
+
+  // Aquí está la lista de preguntas:
+  // ${questions
+  //   .map(
+  //     (q, i) =>
+  //       `${i + 1}. Pregunta: ${q.question} y texto: ${q.text}
+  // Opciones: ${q.options.map((opt, idx) => `${idx}. ${opt}`).join(" | ")}
+  // Respuesta correcta (index): ${q.correctAnswerIndex}`
+  //   )
+  //   .join("\n\n")}
+
+  // Responde SOLO con un array JSON que contenga objetos con el siguiente formato:
+  // [
+  //   {
+  //     "explanation": "Explicación detallada aquí"
+  //   },
+  //   ...
+  // ]
+  // El orden debe coincidir con las preguntas. NO repitas las preguntas ni las opciones.
+  // `;
+};
 /*
 
  return `final prompt = 

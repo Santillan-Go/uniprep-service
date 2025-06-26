@@ -1,11 +1,12 @@
 import { AzureOpenAI } from "openai";
-import express from "express";
+import express, { text } from "express";
 import cors from "cors";
 
 import dotenv from "dotenv";
 import {
   get_generate_prompt,
   get_generate_prompt_explanation,
+  get_generate_prompt_explanation_lecture,
   get_generate_prompt_lecture,
 } from "./prompts/generate.js";
 
@@ -86,7 +87,7 @@ app.post("/generate", async (req, res) => {
         },
       ],
       temperature: 0.3, // Más bajo = menos "imaginativo", más preciso
-      max_tokens: 1500, // Aumenta por si las explicaciones son largas
+      max_tokens: 2000, // Aumenta por si las explicaciones son largas
     });
 
     /*
@@ -112,18 +113,29 @@ app.post("/generate", async (req, res) => {
     console.log("Generated response:", result);
 
     //WE'RE GONNA TAKE question & options properties from the result
-    const formattedResult = result.map((item) => ({
-      question: item.question,
-      options: item.options,
-      correctAnswerIndex: item.correctAnswerIndex,
-    }));
+    let formattedResult =
+      subject == "Matemáticas"
+        ? result.map((item) => ({
+            question: item.question,
+            options: item.options,
+            correctAnswerIndex: item.correctAnswerIndex,
+          }))
+        : result.map((item) => ({
+            question: item.question,
+            options: item.options,
+            correctAnswerIndex: item.correctAnswerIndex,
+            text: item.text,
+          }));
 
     const response2 = await client.chat.completions.create({
       model: "gpt-4o", // No pongas `deployment` si no es necesario, y ya lo defines aquí.
       messages: [
         {
           role: "user",
-          content: get_generate_prompt_explanation(formattedResult),
+          content:
+            subject == "Matemáticas"
+              ? get_generate_prompt_explanation(formattedResult)
+              : get_generate_prompt_explanation_lecture(formattedResult),
         },
       ],
       temperature: 0.3, // Más bajo = menos "imaginativo", más preciso
